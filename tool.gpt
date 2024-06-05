@@ -1,0 +1,6 @@
+name: token
+args: message: the message to ask the user
+args: field: the name of the field (i.e. "key", "token")
+args: env: the name of the environment variable to set
+
+#!${GPTSCRIPT_TOOL_DIR}/bin/gptscript-go-tool "${GPTSCRIPT_INPUT}"
