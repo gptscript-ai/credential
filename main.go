@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strconv"
 
 	"github.com/gptscript-ai/go-gptscript"
 	"github.com/tidwall/gjson"
@@ -41,6 +42,16 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Check for the "sensitive" value in the JSON input.
+	// We don't unmarshal this value because we want the default to be true instead of false.
+	// So we just check for it here manually instead, and only flip it to false if the user provided
+	// exactly the string "false" or the boolean false.
+	sensitive := true
+	sensitiveVal := gjson.Get(inputStr, "sensitive")
+	if sensitiveVal.Type == gjson.False || (sensitiveVal.Type == gjson.String && sensitiveVal.String() == "false") {
+		sensitive = false
+	}
+
 	client, err := gptscript.NewGPTScript()
 	if err != nil {
 		fmt.Println("Error creating GPTScript client:", err)
@@ -51,7 +62,7 @@ func main() {
 	sysPromptIn, err := json.Marshal(sysPromptInput{
 		Message:   in.Message,
 		Fields:    in.Field,
-		Sensitive: "true",
+		Sensitive: strconv.FormatBool(sensitive),
 	})
 	if err != nil {
 		fmt.Println("Error marshalling sys prompt input:", err)
