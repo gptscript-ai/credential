@@ -1,4 +1,4 @@
-module github.com/gptscript-ai/token
+module github.com/gptscript-ai/credential
 
 go 1.22.3
 
