@@ -42,6 +42,10 @@ func main() {
 		os.Exit(1)
 	}
 
+	if in.Field == "" {
+		in.Field = "value"
+	}
+
 	// Check for the "sensitive" value in the JSON input.
 	// We don't unmarshal this value because we want the default to be true instead of false.
 	// So we just check for it here manually instead, and only flip it to false if the user provided

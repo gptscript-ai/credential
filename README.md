@@ -6,8 +6,8 @@ environment variable and saved in the credential store.
 ## Arguments:
 
 - `message`: The message to present to the user when asking for the token
-- `field`: The name of the field that the user will fill in (i.e. "token")
 - `env`: The name of the environment variable to set to the user's input
+- `field`: (optional, default `value`) The name of the field that the user will fill in (i.e. "token")
 - `sensitive`: (optional, default true) If true, asterisks will be shown as the user types, rather than plain text
 
 ## Example:
