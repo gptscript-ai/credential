@@ -56,7 +56,7 @@ func main() {
 		sensitive = false
 	}
 
-	client, err := gptscript.NewGPTScript()
+	client, err := gptscript.NewGPTScript(gptscript.GlobalOptions{})
 	if err != nil {
 		fmt.Println("Error creating GPTScript client:", err)
 		os.Exit(1)

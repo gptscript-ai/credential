@@ -3,12 +3,12 @@ module github.com/gptscript-ai/credential
 go 1.22.3
 
 require (
-	github.com/gptscript-ai/go-gptscript v0.0.0-20240605152851-4341fa1f3d9d
+	github.com/gptscript-ai/go-gptscript v0.0.0-20240613214812-8111c2b02d71
 	github.com/tidwall/gjson v1.17.1
 )
 
 require (
-	github.com/getkin/kin-openapi v0.123.0 // indirect
+	github.com/getkin/kin-openapi v0.124.0 // indirect
 	github.com/go-openapi/jsonpointer v0.20.2 // indirect
 	github.com/go-openapi/swag v0.22.8 // indirect
 	github.com/invopop/yaml v0.2.0 // indirect
