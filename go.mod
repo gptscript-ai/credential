@@ -1,9 +1,11 @@
 module github.com/gptscript-ai/credential
 
-go 1.22.3
+go 1.23.0
+
+toolchain go1.23.1
 
 require (
-	github.com/gptscript-ai/go-gptscript v0.0.0-20240801203434-840b14393b17
+	github.com/gptscript-ai/go-gptscript v0.9.5-rc5.0.20240927213153-2af51434b93e
 	github.com/tidwall/gjson v1.17.1
 )
 
