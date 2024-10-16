@@ -14,8 +14,8 @@ on:
   pull_request:
 
 env:
-  DESTDIR: ./bin
   GO_VERSION: 1.23.1
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
@@ -68,14 +68,19 @@ jobs:
       - run: |
           (cd credential && sha256sum -b *) > checksums.txt
           (cd credential-windows && sha256sum -b *) >> checksums.txt
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifactErrorsFailBuild: true
-          artifacts: "./credential/*,./credential-windows/*,./checksums.txt"
-          makeLatest: ${{ !contains(github.ref_name, '-rc') }}
-          generateReleaseNotes: true
-          prerelease: ${{ contains(github.ref_name, '-rc') }}
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: install gh CLI
+        run: |
+          # Command taken from here: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt
+          (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
+            && sudo mkdir -p -m 755 /etc/apt/keyrings \
+            && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+            && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+            && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+            && sudo apt update \
+            && sudo apt install gh -y
+      - name: attach artifacts to release
+        run: |
+          RELEASE_NAME=${{ github.ref_name }}
+          gh release upload $RELEASE_NAME credential/* --repo ${{ github.repository }} --clobber
+          gh release upload $RELEASE_NAME credential-windows/* --repo ${{ github.repository }} --clobber
+          gh release upload $RELEASE_NAME checksums.txt --repo ${{ github.repository }} --clobber
