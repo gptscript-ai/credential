@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  DESTDIR: ./bin
+  GO_VERSION: 1.23.1
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
