@@ -66,8 +66,8 @@ jobs:
         uses: actions/download-artifact@v4
       - run: ls -lR
       - run: |
-          sha256sum -b credential*/* > checksums.txt
-          sha256sum -c --strict checksums.txt
+          (cd credential && sha256sum -b *) > checksums.txt
+          (cd credential-windows && sha256sum -b *) >> checksums.txt
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
