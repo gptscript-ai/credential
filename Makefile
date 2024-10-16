@@ -14,11 +14,6 @@ build-windows:
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -o credential-windows-amd64.exe ./...
 	CGO_ENABLED=0 GOOS=windows GOARCH=arm64 go build -ldflags "-s -w" -o credential-windows-arm64.exe ./...
 
-checksums:
-	@echo "Creating checksums..."
-	sha256sum -b credential-* > checksums.txt
-	sha256sum -c --strict checksums.txt
-
 # Clean up binaries
 clean:
 	@echo "Cleaning up..."

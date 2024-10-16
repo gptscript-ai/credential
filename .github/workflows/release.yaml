@@ -66,13 +66,14 @@ jobs:
         uses: actions/download-artifact@v4
       - run: ls -lR
       - run: |
-          make checksums
+          sha256sum -b credential*/* > checksums.txt
+          sha256sum -c --strict checksums.txt
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           artifactErrorsFailBuild: true
-          artifacts: "./credential-*,./checksums.txt"
+          artifacts: "./credential/*,./credential-windows/*,./checksums.txt"
           makeLatest: ${{ !contains(github.ref_name, '-rc') }}
           generateReleaseNotes: true
           prerelease: ${{ contains(github.ref_name, '-rc') }}
