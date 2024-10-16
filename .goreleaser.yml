@@ -1,0 +1,26 @@
+version: 2
+dist: releases
+builds:
+  - id: credential
+    binary: "credential"
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - "-trimpath"
+    ldflags:
+      - "-s -w"
+    env:
+      - CGO_ENABLED=0
+    mod_timestamp: "{{ .CommitTimestamp }}"
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+release:
+  github:
+    owner: "g-linville"
+    name: "credential"
